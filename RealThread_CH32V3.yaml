@@ -1,0 +1,149 @@
+---
+vendor: RealThread
+dvendor: WCH
+name: CH32V3
+version: 1.0.0
+yaml_version: 1
+type: Chip_Support_Packages
+family_name: CH32
+series:
+  description: |-
+    WCH CH32V3 series of mainstream MCUs covers the needs of a large variety of applications in the industrial,medical and consumer markets. High performance with first-class peripherals and low-power,low-voltage operation is paired with a high level of integration at accessible prices with a simple architecture and easy-to-use tools.
+
+      - FLASH/RAM configurations ——288KB FLASH ，32KB RAM ——256KB FLASH ，64KB RAM ——224KB FLASH ，96KB RAM ——192KB FLASH ，128KB RAM
+      - 2*ADC(TKey)
+      - 2*DAC
+      - 4*ADTM
+      - 4*GPTM
+      - 2*BCTM
+      - 8*U(S)ART
+      - 3*SPI(2*I2S)
+      - 2*I2C
+      - USB-OTG
+      - USBHS(+PHY)
+      - 2*CAN
+      - RTC
+      - 2*WDG
+      - 4*OPA
+      - RNG
+      - SDIO
+      - FSMC
+      - DVP
+      - ETH-1000MAC
+      - 10M-PHY
+  series_name: CH32V3
+  peripheral: {}
+  sub_series:
+  - sub_series_name: CH32V307
+    chips:
+    - chip_name: CH32V307VC
+      peripheral: {}
+      memory:
+      - id: IROM1
+        start: '0x08000000'
+        size: '0x00048000'
+        default: '1'
+      - id: IRAM1
+        start: '0x20000000'
+        size: '0x00018000'
+        init: '0'
+        default: '1'
+      cpu_info:
+        max_clock: '144000000'
+        fpu: '0'
+        mpu: '0'
+        endian: Little-endian        
+      compiler:
+        gcc:
+          entry_point: entry
+          link_script: linkscripts\CH32V307C\link.lds
+          marco:
+          - CH32V307V
+          files:
+          - libraries\bmsis\source\startup_ch32v30x.S
+          - libraries\ch32v307_hal\include\ch32v30x.h
+        armcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+        iarcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+    ui:
+      uart:
+        default_value: UART1
+        prompt_message_en: select one uart as console output interface
+        prompt_message_zh: 选择一个串口作为控制台信息输出接口
+      tx_pin:
+        default_value: PA9
+        prompt_message_en: 'set the tx pin name of the console device interface, the
+          value should be with a format"P+[port name][pin number]",eg. PB6, PB15, PA6 '
+        prompt_message_zh: 设置控制台设备的数据发送引脚的名称, 名称应该具有以下格式“P+[端口名称][端口编号]”, 比如：PB6, PB15, PA6
+      rx_pin:
+        default_value: PA10
+        prompt_message_en: 'set the rx pin name of the console device interface, the
+          value should be with a format"P+[port name][pin number]", eg. PB7, PA8, PA7 '
+        prompt_message_zh: 设置控制台设备的数据发送引脚的名称，名称应该具有以下格式“P+[端口名称][端口编号]”, 比如：PB7, PA8, PA7
+    docs:
+    - file: documents\CH32V20x_30xDS0.pdf
+      title: CH32V20x_30xDS0 datasheet
+    svd:
+      file: debug\svd\CH32V307xx.svd
+    project_type:
+      bare_metal:
+        function_map:
+          clk_init: none
+          uart_init: none
+          putc: none
+          sysTick: none
+        marco:
+        source_files:
+        - drivers\baremetal
+      rtt_nano:
+        function_map:
+          clk_init: none
+          uart_init: none
+          putc: none
+          getc: none
+          sysTick: none
+          heap_init: none
+        marco:
+        source_files:
+        - drivers\nano    
+      rtt:
+        function_map:
+          rt_hw_board_init;: none
+          rt_hw_serial_register: none
+          rt_hw_pin_register: none
+          heap_init: none
+        marco:     
+        source_files:
+        - drivers\rtt
+  docs:
+  - file: documents/sheet/sheet.pdf
+    title: CH32V20x_30x Datasheet
+  source_files:
+    file:
+    - libraries\ch32v307_hal
+    - libraries\bmsis\include
+    - libraries\bmsis\source
+  cpu_info:
+    core: RISC-V
+  ui:
+    uart:
+      default_value: UART1
+      prompt_message_en: select one uart as console output interface
+      prompt_message_zh: 选择一个串口作为控制台信息输出接口
+    tx_pin:
+      default_value: PA9
+      prompt_message_en: 'set the tx pin name of the console device interface, the
+        value should be with a format"P+[port name][pin number]",eg. PB6, PB15, PA6 '
+      prompt_message_zh: 设置控制台设备的数据发送引脚的名称, 名称应该具有以下格式“P+[端口名称][端口编号]”, 比如：PB6, PB15, PA6
+    rx_pin:
+      default_value: PA10
+      prompt_message_en: 'set the rx pin name of the console device interface, the
+        value should be with a format"P+[port name][pin number]", eg. PB7, PA8, PA7 '
+      prompt_message_zh: 设置控制台设备的数据发送引脚的名称，名称应该具有以下格式“P+[端口名称][端口编号]”, 比如：PB7, PA8, PA7
